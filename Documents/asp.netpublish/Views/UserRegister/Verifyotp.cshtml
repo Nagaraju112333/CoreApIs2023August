@@ -1,0 +1,112 @@
+﻿@model ArchentsIT.Models.VerifyOtp
+@{
+    ViewBag.Title = "Verifyotp";
+    Layout = "~/Views/Shared/ArchentsIT.cshtml";
+}
+
+<html>
+<head>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>ForgotPassword</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="~/CSS/VerifyOtp.css" rel="stylesheet" />
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            Clientvalidation();
+        });
+        function Clientvalidation() {
+            $("#formregister").validate({
+                rules: {
+                   
+                    'Otp': {
+                        required: true,
+                        number: true
+                    }
+
+                },
+                messages: {
+                    'Otp': {
+                        required: 'Verify Otp is required',
+                        number: 'Enter only Numbers'
+                       
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+    <body>
+        <div class="container">
+          
+            <div class="main1">
+                <div style="margin-right:550px;">
+                   @* @if (Session["OtpVerifySuccessfully"] != null)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Success!</strong>@Session["OtpVerifySuccessfully"];
+                            <button class="close" data-dismiss="alert">X</button>
+                        </div>
+                    }*@
+                    @if (TempData["successmessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Success!</strong>@TempData["successmessage"];
+                            <button class="close" data-dismiss="alert">X</button>
+                        </div>
+                    }
+                </div>
+                <p style="">Verify Otp</p>
+
+                <div class="forgotpassword">
+
+                    @using (Html.BeginForm("Verifyotp", "UserRegister", FormMethod.Post,htmlAttributes:new {@id="formregister" }))
+                    {
+
+                        <div class="form-horizontal">
+                          
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" id="emailormobilenumber">Enter Otp</label>
+                                @Html.TextBoxFor(model => model.Otp, "", new { @class = "form-control w-50",@placeholder = "Enter OTP" })
+                            
+                               
+                            </div>
+                            <div class="text-danger">
+                                @ViewBag.Message
+                            </div>
+                            <div class="form-group" style="margin-top:20px;">
+                                <div class="form-group">
+                                    <input type="submit" value="Verify" class=" form-control  w-50" id="btn1" style="border-radius:5px;" />
+                                </div>
+                                <div style="margin-top:10px;">
+                                    <a style="border-radius:5px" href="~/UserRegister/ForgotPassword" class="btn btn-success">Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            window.setTimeout(function () {
+                $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                    $(this).remove();
+                })
+            }, 4000)
+        </script>
+    </body>
+
+</html>
+
+

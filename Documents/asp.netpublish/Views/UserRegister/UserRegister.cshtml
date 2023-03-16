@@ -1,0 +1,175 @@
+﻿@model  ArchentsIT.Models.UserRegister
+@{
+    ViewBag.Title = "UserRegister";
+    Layout = "~/Views/Shared/ArchentsIT.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>UserRegister</title>
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- jQuery library -->
+    @* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>*@
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="~/CSS/Userregister.css" rel="stylesheet" />
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            Clientvalidation();
+        });
+        function Clientvalidation() {
+            $("#formregister").validate({
+                rules: {
+                    'FirstName': {
+                        required: true
+                    },
+                    'LastName': {
+                        required: true,
+                    },
+                    'Email': {
+                        required: true,
+                        email: true
+                    },
+                    'Designation': {
+                        required: true,
+                    },
+                    'Phone_Number': {
+                        required: true,
+                        number: true,
+                        maxlength: 10
+
+                    }
+
+                },
+                messages: {
+                    'FirstName': {
+                        required: 'FirstName is required',
+                       
+                    },
+                    'LastName': {
+                        required: 'LastName is required'
+                       
+                    },
+                    'Email': {
+                        required: 'Email is required',
+                        email: 'Please enter valid email'
+                    },
+                    'Designation': {
+                        required: 'Designation is required',
+                    },
+                    'Phone_Number': {
+                        required: 'Phone Number is required',
+                        number: 'Enter only Numbers',
+                        maxlength: 'maximum length of phone number is 10'
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="">
+
+        <div id="homeAndCreateLink" style=" background-color:#EFEFEF;">
+          @*  @Html.ActionLink("Home/", "Home", "Home", new { style = "text-decoration:none; color:#686363" })
+            @Html.ActionLink("Create An Account", "Home", "Home", new { style = "text-decoration:none; color:#686363" })*@
+
+        </div>
+       
+        <div class="main">
+            <h3 style="margin-left:10px;" id="p1">Create An Account</h3>
+            @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+            {
+                if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-success">
+                        <strong>Success!</strong>@ViewBag.Message
+                        @*  swal("Good job!", "You clicked the button!", "success");*@
+                    </div>
+                }
+            }
+
+            @using (Html.BeginForm("UserRegister", "UserRegister", FormMethod.Post, htmlAttributes: new {@id= "formregister" }))
+            {
+                @*@Html.AntiForgeryToken()*@
+
+                <div class="form-horizontal">
+
+                 @*   @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+
+                    <h6 style="color:lightcoral">@ViewBag.IsEmailExist</h6>
+                    <br />
+                    <div class="form-group">
+
+                        @* @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label " })*@
+                        <label id="fname">FirstName</label>
+                        <div class="form-group-lg">
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control w-50 " } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label " })*@
+                        <label id="fname">LastName</label>
+                        <div class="form-group-lg  ">
+                            @Html.EditorFor(model =>model.LastName, new { htmlAttributes = new { @class = "form-control w-50" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @*  @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label " })*@
+                        <label id="fname">Email</label>
+                        <div class="form-group-lg ">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control w-50" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @*  @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label " })*@
+                        <label id="fname">Designation</label>
+                        <div class="form-group-lg ">
+                            @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control w-50" } })
+                            @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label " })
+                    <div class="form-group-lg ">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control w-50", type = "password" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+                    <div class="form-group">
+                        @* @Html.LabelFor(model => model.Phone_Number, htmlAttributes: new { @class = "control-label " })*@
+                        <label id="fname">Phone_Number</label>
+                        <div class="form-group-lg">
+                            @Html.EditorFor(model =>model.Phone_Number, new { htmlAttributes = new { @class = "form-control w-50" } })
+                            @Html.ValidationMessageFor(model => model.Phone_Number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success" value="Create an Account" id="btn12" />
+                    </div>
+                </div>
+            }
+
+            <div id="CreateButton">
+
+                <h5 style="margin-left:15px;">@Html.ActionLink("Already a Member? Sign in here", "Login", "UserRegister", new { style = "text-decoration:none; color:black" })</h5>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

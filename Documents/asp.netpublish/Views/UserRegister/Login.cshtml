@@ -1,0 +1,182 @@
+﻿@*@model  ArchentsIT.Models.UserLogin*@
+@model ArchentsIT.Models.UserLogin
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/ArchentsIT.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+
+    <link href="~/CSS/Login.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css/">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    @*    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    *@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            Clientvalidation();
+        });
+        function Clientvalidation() {
+            $("#formregister").validate({
+                rules: {
+                    'EmailID': {
+                        required: true,
+                        email: true
+                    },
+                    'Password': {
+                        required: true,
+                        minlength:6
+                    }
+
+                },
+                messages: {
+                    'EmailID': {
+                        required: 'Email is required',
+                        email: "Enter Valid Email Address"
+                    },
+                    'Password': {
+                        required: 'Password is required',
+                        minlength: 'minimum length of password is 6'
+                    }
+                }
+            });
+        }
+    </script>
+    
+
+</head>
+<body>
+    <div class="" style="display: flex;" id="TwoDiv">
+      
+        <div class="first">
+           <img src="~/Images/IT Help Desk (1).png" width="850" height="600" style="margin-left:10px;" id="ithelpdeskid" />
+        </div>
+        <div class="second">
+
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-success">
+                    <strong>Success!</strong>@TempData["message"];
+                    @*  <script>swal("Good job!", "You clicked the button!", "Success");</script>*@
+                    <button class="close" data-dismiss="alert">X</button>
+                </div>
+            }
+            @if (TempData["Successfull"] != null)
+            {
+                <div class="alert alert-success">
+                    <strong>Success!</strong>@TempData["Successfull"];
+                    @*  <script>swal("Good job!", "You clicked the button!", "Success");</script>*@
+                    <button class="close" data-dismiss="alert">X</button>
+                </div>
+            }
+            @if (TempData["NewPassword"] != null)
+            {
+                <div class="alert alert-success">
+                    <strong>Success!</strong>@TempData["NewPassword"];
+                    @*  <script>swal("Good job!", "You clicked the button!", "Success");</script>*@
+                    <button class="close" data-dismiss="alert">X</button>
+                </div>
+            }
+            @using (Html.BeginForm("", "", FormMethod.Post, htmlAttributes: new {@id= "formregister" }))
+            {
+                HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+             
+
+                <div class="form-horizontal card p-3">
+
+               
+            
+                    <h3 id="p2"> Login</h3>
+                    @if (ViewBag.Message != "")
+                {
+                    <div class="text-danger">@ViewBag.Message</div>
+                }
+                    <div class="form-group">
+                       
+                        <label id="emiallable">Email</label>
+                        <div class="form-group-lg ">
+                            @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control w-100", placeholder = "Email" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="passwordlabel">Password</label>
+                        <div class="form-group-lg" style="position:relative">
+                            <input type="password" name="Password" id="password" class="form-control w-100" placeholder="Password" AutoCompleteType="current-password" />
+                            <i class="bi bi-eye-slash" id="togglePassword" style="position:absolute"></i>
+                        </div>
+                        <div class="text-end pt-2">
+                            <a>  @Html.ActionLink("Forgot your password?", "ForgotPassword", "UserRegister", new { style = "text-decoration:none; color:black" })</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-between">
+                        <div class="aaa">
+                            <a>
+                                @Html.ActionLink("Don't have a account? Register here", "UserRegister", "UserRegister", new { style = "text-decoration:none; color:black" })
+                            </a>
+                        </div>
+                        <div>
+                            <input type="submit" class="btn btn-success" value="Sign In" id="btn12" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+  <script type="text/javascript">
+      const togglePassword = document.querySelector('#togglePassword');
+      const password = document.querySelector('#password');
+      togglePassword.addEventListener('click', function (e) {
+          // toggle the type attribute
+          const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+          password.setAttribute('type', type);
+          // toggle the eye / eye slash icon
+          this.classList.toggle('bi-eye');
+      });
+  </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#show_password').hover(function show() {
+                //Change the attribute to text
+                $('#txtPassword').attr('type', 'text');
+                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            },
+                function () {
+                    //Change the attribute back to password
+                    $('#txtPassword').attr('type', 'password');
+                    $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+                });
+            //CheckBox Show Password
+            $('#ShowPassword').click(function () {
+                $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+            });
+        });
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            })
+        },4000)
+    </script>
+
+</body>
+</html>
+
